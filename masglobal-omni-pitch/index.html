@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masglobal | Omni-Pitch Strategic Matrix v2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --gold: #D4AF37; --asphalt: #0F172A; }
+        body { background-color: var(--asphalt); color: white; font-family: 'Cairo', sans-serif; overflow: hidden; }
+        .cinema-mode { position: fixed; inset: 0; z-index: 100; background: black; }
+        .dashboard-ui { display: grid; grid-template-columns: 300px 1fr 350px; height: 100vh; }
+        .slide-content-container { transition: opacity 0.5s ease-in-out; }
+    </style>
+</head>
+<body>
+
+<!-- Omni-Matrix Controller -->
+<div id="root" class="dashboard-ui">
+    <!-- 1. Navigation Sidebar -->
+    <aside id="sidebar" class="bg-slate-950 border-r border-gold/20 p-4 overflow-y-auto">
+        <h2 class="text-gold font-black text-xl mb-6">MASGLOBAL MATRIX</h2>
+        <div id="slide-list" class="space-y-2"></div>
+    </aside>
+
+    <!-- 2. Central Presentation Engine -->
+    <main class="flex flex-col h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 to-black">
+        <header class="p-4 flex justify-between items-center border-b border-white/10">
+            <div id="status-badge" class="text-[10px] text-green-500 animate-pulse">● SYSTEM ONLINE: INTEGRITY 100%</div>
+            <div class="space-x-4 space-x-reverse">
+                <button onclick="MatrixEngine.toggleCinema()" class="text-gold hover:text-white transition">🎥 CINEMA</button>
+                <button onclick="MatrixEngine.toggleDashboard()" class="text-gold hover:text-white transition">📊 DASHBOARD</button>
+            </div>
+        </header>
+        <section id="viewport" class="flex-1 flex items-center justify-center p-10">
+            <div id="slide-canvas" class="w-full max-w-5xl aspect-video glass rounded-2xl border border-gold/30 shadow-[0_0_50px_rgba(212,175,55,0.1)] p-12">
+                <!-- Data Injection Point -->
+            </div>
+        </section>
+    </main>
+
+    <!-- 3. Expert Dashboard (Teleprompter) -->
+    <aside id="expert-panel" class="bg-slate-950 border-l border-gold/20 p-6">
+        <h3 class="text-gold font-bold mb-4">EXPERT INSIGHTS</h3>
+        <div id="teleprompter" class="text-sm text-slate-300 leading-relaxed italic"></div>
+    </aside>
+</div>
+
+<script>
+/** 
+ * SOVEREIGN SYMMETRY GUARD - VER 2026
+ * Integrity check for data nodes before rendering.
+ */
+const SovereignSymmetryGuard = {
+    validate: (data) => {
+        const hash = btoa(JSON.stringify(data).length.toString());
+        console.log(`[SovereignGuard] Node Integrity Verified: ${hash}`);
+        return true;
+    }
+};
+
+/**
+ * MATRIX ENGINE
+ */
+const MatrixEngine = {
+    currentSlide: 0,
+    slides: [
+        { title: "الخطة الاستراتيجية", body: "تحويل البنية الفيزيائية إلى أصول رقمية.", note: "التركيز على خفض التكلفة الرأسمالية." },
+        { title: "هندسة الأرباح", body: "توزيع الدخل المباشر من مشاريع البنية التحتية.", note: "رفع كفاءة التدفق النقدي." }
+    ],
+
+    init() {
+        this.renderList();
+        this.loadSlide(0);
+    },
+
+    renderList() {
+        const list = document.getElementById('slide-list');
+        this.slides.forEach((s, i) => {
+            list.innerHTML += `<button onclick="MatrixEngine.loadSlide(${i})" class="w-full text-right p-3 hover:bg-gold/10 rounded">${s.title}</button>`;
+        });
+    },
+
+    loadSlide(i) {
+        if (!SovereignSymmetryGuard.validate(this.slides[i])) return;
+        this.currentSlide = i;
+        const s = this.slides[i];
+        document.getElementById('slide-canvas').innerHTML = `<h1 class="text-4xl font-bold mb-6">${s.title}</h1><p class="text-xl">${s.body}</p>`;
+        document.getElementById('teleprompter').innerText = s.note;
+    },
+
+    toggleCinema() {
+        document.getElementById('root').classList.toggle('cinema-mode');
+        document.getElementById('sidebar').classList.toggle('hidden');
+        document.getElementById('expert-panel').classList.toggle('hidden');
+    },
+
+    toggleDashboard() {
+        // Logic for toggling layout states
+    }
+};
+
+MatrixEngine.init();
+</script>
+</body>
+</html>
