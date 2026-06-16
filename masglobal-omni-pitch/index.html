@@ -101,6 +101,9 @@ const MatrixEngine = {
 };
 
 MatrixEngine.init();
+
+// Prevent runtime mutation of slide data once the engine has booted
+Object.freeze(MatrixEngine.slides);
 </script>
 </body>
 </html>
