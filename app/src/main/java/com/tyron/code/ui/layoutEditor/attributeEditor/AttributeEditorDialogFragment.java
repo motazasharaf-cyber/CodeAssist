@@ -43,6 +43,7 @@ public class AttributeEditorDialogFragment extends BottomSheetDialogFragment {
 
     public static final String KEY_ATTRIBUTE_CHANGED = "ATTRIBUTE_CHANGED";
     public static final String KEY_ATTRIBUTE_REMOVED = "ATTRIBUTE_REMOVED";
+    public static final String KEY_VIEW_DELETE = "VIEW_DELETE";
 
     public static AttributeEditorDialogFragment newInstance(String tag, String parentTag, ArrayList<Pair<String, String>> availableAttributes, ArrayList<Pair<String, String>> attributes) {
         Bundle args = new Bundle();
@@ -136,6 +137,19 @@ public class AttributeEditorDialogFragment extends BottomSheetDialogFragment {
                 mAdapter.submitList(mAttributes);
             }));
             builder.show();
+        });
+
+        LinearLayout linearDelete = view.findViewById(R.id.linear_delete);
+        linearDelete.setOnClickListener(v -> {
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Delete view")
+                    .setMessage("Remove this view from the layout?")
+                    .setPositiveButton("Delete", (d, w) -> {
+                        getParentFragmentManager().setFragmentResult(KEY_VIEW_DELETE, new Bundle());
+                        dismiss();
+                    })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
         });
 
         getParentFragmentManager().setFragmentResultListener(KEY_ATTRIBUTE_REMOVED, getViewLifecycleOwner(), ((requestKey, result) -> {

@@ -162,6 +162,21 @@ public class LayoutEditorFragment extends Fragment implements ProjectManager.OnP
                 getChildFragmentManager()
                         .clearFragmentResult(AttributeEditorDialogFragment.KEY_ATTRIBUTE_CHANGED);
             });
+            getChildFragmentManager().setFragmentResultListener(
+                    AttributeEditorDialogFragment.KEY_VIEW_DELETE,
+                    getViewLifecycleOwner(),
+                    (requestKey, result) -> {
+                View asView = view.getAsView();
+                ViewGroup parent = (ViewGroup) asView.getParent();
+                if (parent != null) {
+                    parent.removeView(asView);
+                    if (parent instanceof ProteusView) {
+                        ProteusHelper.removeChildFromLayout(((ProteusView) parent), view);
+                    }
+                    mEditorRoot.postDelayed(() -> mEditorRoot.invalidate(), 300);
+                }
+                getChildFragmentManager().clearFragmentResult(AttributeEditorDialogFragment.KEY_VIEW_DELETE);
+            });
         }
     };
 
@@ -446,7 +461,7 @@ public class LayoutEditorFragment extends Fragment implements ProjectManager.OnP
     private List<ViewPalette> populatePalettes() {
         List<ViewPalette> palettes = new ArrayList<>();
 
-        // ── Layouts ──────────────────────────────────────────────────────────
+        // ── Layouts ───────────────────────────────────────────────────────────────────
         palettes.add(createPalette("android.widget.LinearLayout", R.drawable.ic_baseline_vertical_24,
                 ImmutableMap.of(Attributes.View.MinWidth, Dimension.valueOf("50dp"), Attributes.View.MinHeight, Dimension.valueOf("25dp"))));
         palettes.add(createPalette("android.widget.FrameLayout", R.drawable.ic_baseline_frame_24,
@@ -460,7 +475,7 @@ public class LayoutEditorFragment extends Fragment implements ProjectManager.OnP
         palettes.add(createPalette("androidx.cardview.widget.CardView", R.drawable.ic_baseline_style_24,
                 ImmutableMap.of(Attributes.View.MinWidth, Dimension.valueOf("50dp"), Attributes.View.MinHeight, Dimension.valueOf("25dp"))));
 
-        // ── Text & input ─────────────────────────────────────────────────────
+        // ── Text & input ─────────────────────────────────────────────────────────────────
         palettes.add(createPalette("Button",
                 R.drawable.ic_baseline_crop_16_9_24,
                 ImmutableMap.of(Attributes.TextView.Text, new Primitive("Button"))));
@@ -471,11 +486,11 @@ public class LayoutEditorFragment extends Fragment implements ProjectManager.OnP
                 R.drawable.ic_baseline_edit_24,
                 ImmutableMap.of(Attributes.TextView.Hint, new Primitive("EditText"))));
 
-        // ── Image ────────────────────────────────────────────────────────────
+        // ── Image ────────────────────────────────────────────────────────────────────
         palettes.add(createPalette("android.widget.ImageView", R.drawable.ic_baseline_image_24));
         palettes.add(createPalette("android.widget.ImageButton", R.drawable.ic_baseline_image_24));
 
-        // ── Selection & toggles ───────────────────────────────────────────────
+        // ── Selection & toggles ───────────────────────────────────────────────────────────────
         palettes.add(createPalette("android.widget.CheckBox",
                 R.drawable.ic_baseline_check_box_24,
                 ImmutableMap.of(Attributes.TextView.Text, new Primitive("CheckBox"))));
@@ -489,11 +504,11 @@ public class LayoutEditorFragment extends Fragment implements ProjectManager.OnP
                 ImmutableMap.of(Attributes.TextView.Text, new Primitive("Switch"))));
         palettes.add(createPalette("android.widget.Spinner", R.drawable.ic_baseline_arrow_drop_down_24));
 
-        // ── Progress & range ─────────────────────────────────────────────────
+        // ── Progress & range ─────────────────────────────────────────────────────────────────
         palettes.add(createPalette("android.widget.SeekBar", R.drawable.ic_baseline_swipe_right_alt_24));
         palettes.add(createPalette("android.widget.ProgressBar", R.drawable.ic_baseline_linear_scale_24));
 
-        // ── Web ──────────────────────────────────────────────────────────────
+        // ── Web ────────────────────────────────────────────────────────────────────────
         palettes.add(createPalette("android.webkit.WebView", R.drawable.ic_baseline_web_24,
                 ImmutableMap.of(Attributes.View.MinWidth, Dimension.valueOf("100dp"), Attributes.View.MinHeight, Dimension.valueOf("100dp"))));
 

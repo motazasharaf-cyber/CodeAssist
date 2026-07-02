@@ -39,31 +39,35 @@ public class AttributeEditorAdapter extends RecyclerView.Adapter<AttributeEditor
     }
 
     public void submitList(List<kotlin.Pair<String, String>> newList) {
+        // Snapshot both sides so DiffUtil reads stable, independent lists even
+        // when the caller passes the same collection that backs mAttributes.
+        final List<Pair<String, String>> oldList = new ArrayList<>(mAttributes);
+        final List<Pair<String, String>> newCopy = new ArrayList<>(newList);
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override
             public int getOldListSize() {
-                return mAttributes.size();
+                return oldList.size();
             }
 
             @Override
             public int getNewListSize() {
-                return newList.size();
+                return newCopy.size();
             }
 
             @Override
             public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                return mAttributes.get(oldItemPosition).getFirst()
-                        .equals(newList.get(newItemPosition).getFirst());
+                return oldList.get(oldItemPosition).getFirst()
+                        .equals(newCopy.get(newItemPosition).getFirst());
             }
 
             @Override
             public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                return mAttributes.get(oldItemPosition).getSecond()
-                        .equals(newList.get(newItemPosition).getSecond());
+                return oldList.get(oldItemPosition).getSecond()
+                        .equals(newCopy.get(newItemPosition).getSecond());
             }
         });
         mAttributes.clear();
-        mAttributes.addAll(newList);
+        mAttributes.addAll(newCopy);
         result.dispatchUpdatesTo(this);
     }
 
