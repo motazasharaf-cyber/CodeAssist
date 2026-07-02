@@ -446,9 +446,12 @@ public class LayoutEditorFragment extends Fragment implements ProjectManager.OnP
     private List<ViewPalette> populatePalettes() {
         List<ViewPalette> palettes = new ArrayList<>();
 
+        // ── Layouts ──────────────────────────────────────────────────────────
         palettes.add(createPalette("android.widget.LinearLayout", R.drawable.ic_baseline_vertical_24,
                 ImmutableMap.of(Attributes.View.MinWidth, Dimension.valueOf("50dp"), Attributes.View.MinHeight, Dimension.valueOf("25dp"))));
         palettes.add(createPalette("android.widget.FrameLayout", R.drawable.ic_baseline_frame_24,
+                ImmutableMap.of(Attributes.View.MinWidth, Dimension.valueOf("50dp"), Attributes.View.MinHeight, Dimension.valueOf("25dp"))));
+        palettes.add(createPalette("android.widget.RelativeLayout", R.drawable.ic_baseline_view_quilt_24,
                 ImmutableMap.of(Attributes.View.MinWidth, Dimension.valueOf("50dp"), Attributes.View.MinHeight, Dimension.valueOf("25dp"))));
         palettes.add(createPalette("android.widget.ScrollView", R.drawable.ic_baseline_format_line_spacing_24,
                 ImmutableMap.of(Attributes.View.MinWidth, Dimension.valueOf("50dp"), Attributes.View.MinHeight, Dimension.valueOf("25dp"))));
@@ -457,6 +460,7 @@ public class LayoutEditorFragment extends Fragment implements ProjectManager.OnP
         palettes.add(createPalette("androidx.cardview.widget.CardView", R.drawable.ic_baseline_style_24,
                 ImmutableMap.of(Attributes.View.MinWidth, Dimension.valueOf("50dp"), Attributes.View.MinHeight, Dimension.valueOf("25dp"))));
 
+        // ── Text & input ─────────────────────────────────────────────────────
         palettes.add(createPalette("Button",
                 R.drawable.ic_baseline_crop_16_9_24,
                 ImmutableMap.of(Attributes.TextView.Text, new Primitive("Button"))));
@@ -466,13 +470,32 @@ public class LayoutEditorFragment extends Fragment implements ProjectManager.OnP
         palettes.add(createPalette("android.widget.EditText",
                 R.drawable.ic_baseline_edit_24,
                 ImmutableMap.of(Attributes.TextView.Hint, new Primitive("EditText"))));
+
+        // ── Image ────────────────────────────────────────────────────────────
+        palettes.add(createPalette("android.widget.ImageView", R.drawable.ic_baseline_image_24));
+        palettes.add(createPalette("android.widget.ImageButton", R.drawable.ic_baseline_image_24));
+
+        // ── Selection & toggles ───────────────────────────────────────────────
         palettes.add(createPalette("android.widget.CheckBox",
                 R.drawable.ic_baseline_check_box_24,
                 ImmutableMap.of(Attributes.TextView.Text, new Primitive("CheckBox"))));
+        palettes.add(createPalette("android.widget.RadioGroup", R.drawable.ic_baseline_radio_button_checked_24,
+                ImmutableMap.of(Attributes.View.MinWidth, Dimension.valueOf("50dp"), Attributes.View.MinHeight, Dimension.valueOf("25dp"))));
+        palettes.add(createPalette("android.widget.RadioButton",
+                R.drawable.ic_baseline_radio_button_checked_24,
+                ImmutableMap.of(Attributes.TextView.Text, new Primitive("RadioButton"))));
         palettes.add(createPalette("android.widget.Switch",
                 R.drawable.ic_baseline_edit_attributes_24,
                 ImmutableMap.of(Attributes.TextView.Text, new Primitive("Switch"))));
+        palettes.add(createPalette("android.widget.Spinner", R.drawable.ic_baseline_arrow_drop_down_24));
+
+        // ── Progress & range ─────────────────────────────────────────────────
         palettes.add(createPalette("android.widget.SeekBar", R.drawable.ic_baseline_swipe_right_alt_24));
+        palettes.add(createPalette("android.widget.ProgressBar", R.drawable.ic_baseline_linear_scale_24));
+
+        // ── Web ──────────────────────────────────────────────────────────────
+        palettes.add(createPalette("android.webkit.WebView", R.drawable.ic_baseline_web_24,
+                ImmutableMap.of(Attributes.View.MinWidth, Dimension.valueOf("100dp"), Attributes.View.MinHeight, Dimension.valueOf("100dp"))));
 
         return palettes;
     }
